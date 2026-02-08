@@ -1,0 +1,12 @@
+{
+  "name": "imdbmatches-importer",
+  "private": true,
+  "type": "module",
+  "version": "1.0.0",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.49.1"
+  },
+  "scripts": {
+    "import": "node importMatches.js"
+  }
+}
