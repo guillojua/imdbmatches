@@ -1,0 +1,32 @@
+name: Import Matches Daily
+
+on:
+  schedule:
+    # Todos los días 06:10 UTC (podés cambiarlo después)
+    - cron: "10 6 * * *"
+  workflow_dispatch: {}
+
+jobs:
+  run-import:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install deps (importer)
+        working-directory: importer
+        run: npm install
+
+      - name: Run importer
+        working-directory: importer
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+          FOOTBALL_DATA_API_KEY: ${{ secrets.FOOTBALL_DATA_API_KEY }}
+        run: npm run import
